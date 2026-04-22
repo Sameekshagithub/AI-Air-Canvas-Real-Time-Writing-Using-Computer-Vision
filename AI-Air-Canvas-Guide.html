@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Air Canvas – Setup Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blush:      #fce8f0;
+    --rose:       #f7c5d8;
+    --dusty:      #e8a0bb;
+    --deep:       #c0547a;
+    --wine:       #8b2252;
+    --cream:      #fff5f8;
+    --lavender:   #f0e6f6;
+    --mint:       #e6f6f0;
+    --gold:       #e8b86d;
+    --text:       #3d1a2a;
+    --muted:      #9a6878;
+    --border:     rgba(224, 160, 187, 0.4);
+    --shadow:     rgba(192, 84, 122, 0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 10% 0%, rgba(247, 197, 216, 0.4) 0%, transparent 50%),
+      radial-gradient(ellipse at 90% 100%, rgba(240, 230, 246, 0.4) 0%, transparent 50%);
+  }
+
+  /* ── Header ── */
+  header {
+    background: linear-gradient(135deg, #c0547a 0%, #8b2252 60%, #6b1a42 100%);
+    padding: 48px 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: 20%;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .header-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+  .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: #fce8f0;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  h1 span { color: #f7c5d8; }
+  .subtitle {
+    color: rgba(255,255,255,0.75);
+    font-size: 1rem;
+    font-weight: 300;
+    max-width: 560px;
+    line-height: 1.6;
+  }
+  .tech-pills {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-top: 20px;
+  }
+  .pill {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fce8f0;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 12px;
+  }
+
+  /* ── Layout ── */
+  main { max-width: 900px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* ── Section cards ── */
+  .card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 28px;
+    box-shadow: 0 4px 24px var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--dusty), var(--deep), var(--lavender));
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--wine);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-title .icon {
+    width: 36px; height: 36px;
+    background: var(--blush);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  /* ── Steps ── */
+  .steps { counter-reset: step; display: flex; flex-direction: column; gap: 20px; }
+  .step {
+    counter-increment: step;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .step-num {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, var(--dusty), var(--deep));
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-body { padding-top: 8px; }
+  .step-body h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .step-body p {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 10px;
+  }
+
+  /* ── Code blocks ── */
+  .code-block {
+    background: #1e0e18;
+    border-radius: 10px;
+    padding: 16px 18px;
+    position: relative;
+    margin-top: 10px;
+    border: 1px solid rgba(192, 84, 122, 0.2);
+    overflow-x: auto;
+  }
+  .code-block pre {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    color: #f7c5d8;
+    line-height: 1.7;
+    white-space: pre;
+  }
+  .code-block .comment { color: #9a6878; }
+  .code-block .cmd     { color: #f7c5d8; }
+  .code-block .flag    { color: #e8b86d; }
+  .code-block .path    { color: #b8f0d8; }
+
+  .copy-btn {
+    position: absolute;
+    top: 10px; right: 10px;
+    background: rgba(247, 197, 216, 0.15);
+    border: 1px solid rgba(247, 197, 216, 0.3);
+    color: #f7c5d8;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .copy-btn:hover { background: rgba(247, 197, 216, 0.25); }
+  .copy-btn.copied { color: #b8f0d8; border-color: rgba(184,240,216,0.4); }
+
+  /* ── Gesture table ── */
+  .gesture-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+  }
+  .gesture-card {
+    background: var(--blush);
+    border: 1px solid var(--rose);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .gesture-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px var(--shadow);
+  }
+  .gesture-icon { font-size: 2rem; margin-bottom: 8px; }
+  .gesture-label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--wine);
+    margin-bottom: 4px;
+  }
+  .gesture-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.4; }
+
+  /* ── File tree ── */
+  .file-tree {
+    background: #1e0e18;
+    border-radius: 10px;
+    padding: 20px 24px;
+    border: 1px solid rgba(192, 84, 122, 0.2);
+  }
+  .file-tree pre {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.82rem;
+    color: #f7c5d8;
+    line-height: 1.9;
+  }
+  .file-tree .dir  { color: #e8b86d; }
+  .file-tree .file { color: #f7c5d8; }
+  .file-tree .note { color: #9a6878; }
+
+  /* ── Troubleshoot ── */
+  .trouble-item {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .trouble-item:last-child { border-bottom: none; }
+  .trouble-problem {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--wine);
+  }
+  .trouble-fix {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .trouble-fix code {
+    background: var(--blush);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--deep);
+  }
+
+  /* ── Flow diagram ── */
+  .flow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0;
+    justify-content: center;
+    margin: 8px 0;
+  }
+  .flow-step {
+    background: var(--blush);
+    border: 1.5px solid var(--dusty);
+    border-radius: 10px;
+    padding: 10px 16px;
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--wine);
+    white-space: nowrap;
+  }
+  .flow-arrow {
+    color: var(--dusty);
+    font-size: 1.2rem;
+    padding: 0 6px;
+  }
+
+  /* ── Info note ── */
+  .note-box {
+    background: var(--lavender);
+    border-left: 4px solid #b07de8;
+    border-radius: 0 10px 10px 0;
+    padding: 14px 18px;
+    margin-top: 14px;
+    font-size: 0.85rem;
+    color: #5a3580;
+    line-height: 1.6;
+  }
+  .note-box strong { color: #7b4ba8; }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    padding: 32px;
+    color: var(--muted);
+    font-size: 0.82rem;
+  }
+  footer span { color: var(--deep); }
+
+  @media (max-width: 600px) {
+    .trouble-item { grid-template-columns: 1fr; }
+    .flow { gap: 4px; }
+    .flow-arrow { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="badge">✨ Computer Vision Project</div>
+    <h1>AI Air <span>Canvas</span></h1>
+    <p class="subtitle">Real-time hand gesture drawing using your webcam. No mouse. No keyboard. Just your finger and computer vision magic.</p>
+    <div class="tech-pills">
+      <span class="pill">Python 3.8+</span>
+      <span class="pill">OpenCV</span>
+      <span class="pill">MediaPipe</span>
+      <span class="pill">NumPy</span>
+      <span class="pill">VS Code</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- How it works -->
+  <div class="card">
+    <div class="card-title"><div class="icon">🧠</div>How It Works</div>
+    <div class="flow">
+      <div class="flow-step">📷 Webcam</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">🖐 MediaPipe</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">☝️ Finger Track</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">🎨 Draw Canvas</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">📺 Display</div>
+    </div>
+    <div class="note-box">
+      <strong>MediaPipe Hands</strong> detects 21 3D landmarks per hand at ~30 FPS.
+      <strong>Landmark #8</strong> (index fingertip) is tracked as your drawing cursor.
+      A <strong>deque smoothing buffer</strong> averages the last 8 positions to eliminate jitter.
+    </div>
+  </div>
+
+  <!-- Gesture Guide -->
+  <div class="card">
+    <div class="card-title"><div class="icon">✋</div>Gesture Controls</div>
+    <div class="gesture-grid">
+      <div class="gesture-card">
+        <div class="gesture-icon">☝️</div>
+        <div class="gesture-label">1 Finger (Index)</div>
+        <div class="gesture-desc">Draw on the canvas in active colour</div>
+      </div>
+      <div class="gesture-card">
+        <div class="gesture-icon">✌️</div>
+        <div class="gesture-label">2+ Fingers Raised</div>
+        <div class="gesture-desc">Stop drawing — hover / navigate mode</div>
+      </div>
+      <div class="gesture-card">
+        <div class="gesture-icon">🎨</div>
+        <div class="gesture-label">Hover Over Colour</div>
+        <div class="gesture-desc">Raise 2+ fingers & hover fingertip over top buttons</div>
+      </div>
+      <div class="gesture-card">
+        <div class="gesture-icon">🗑️</div>
+        <div class="gesture-label">Hover Over Clear</div>
+        <div class="gesture-desc">Wipes the entire canvas instantly</div>
+      </div>
+      <div class="gesture-card">
+        <div class="gesture-icon">⌨️ C</div>
+        <div class="gesture-label">C Key</div>
+        <div class="gesture-desc">Keyboard shortcut to clear canvas</div>
+      </div>
+      <div class="gesture-card">
+        <div class="gesture-icon">⎋</div>
+        <div class="gesture-label">Q or ESC</div>
+        <div class="gesture-desc">Quit the application</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Project Structure -->
+  <div class="card">
+    <div class="card-title"><div class="icon">📁</div>Project Structure</div>
+    <div class="file-tree">
+      <pre><span class="dir">AI-Air-Canvas/</span>
+│
+├── <span class="file">air_canvas.py</span>          <span class="note">← Main application (run this)</span>
+├── <span class="file">requirements.txt</span>       <span class="note">← Python dependencies</span>
+├── <span class="file">README.md</span>              <span class="note">← Documentation</span>
+│
+├── <span class="dir">utils/</span>
+│   ├── <span class="file">__init__.py</span>
+│   └── <span class="file">hand_tracking.py</span>   <span class="note">← MediaPipe wrapper class</span>
+│
+└── <span class="dir">assets/</span>
+    └── <span class="dir">icons/</span>             <span class="note">← Reserved for future icons</span></pre>
+    </div>
+  </div>
+
+  <!-- Setup Steps -->
+  <div class="card">
+    <div class="card-title"><div class="icon">⚙️</div>Setup in VS Code — Step by Step</div>
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>Open the folder in VS Code</h3>
+          <p>Go to <strong>File → Open Folder</strong> and select the <code>AI-Air-Canvas</code> folder. Or use the terminal:</p>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><span class="cmd">code AI-Air-Canvas</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Open the VS Code Terminal</h3>
+          <p>Press <strong>Ctrl + `</strong> (backtick) to open the integrated terminal at the bottom of VS Code.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Create a virtual environment</h3>
+          <p>⚠️ Use Python 3.8–3.11. MediaPipe does not support 3.12 yet.</p>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><span class="comment"># Windows</span>
+<span class="cmd">python -m venv venv</span>
+<span class="path">venv\Scripts\activate</span>
+
+<span class="comment"># macOS / Linux</span>
+<span class="cmd">python3 -m venv venv</span>
+<span class="path">source venv/bin/activate</span></pre>
+          </div>
+          <div class="note-box">After activation, you should see <strong>(venv)</strong> at the start of your terminal prompt.</div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Install dependencies</h3>
+          <p>This installs OpenCV, MediaPipe and NumPy (~50 MB download).</p>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><span class="cmd">pip install -r requirements.txt</span></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>Select the Python interpreter in VS Code</h3>
+          <p>Press <strong>Ctrl + Shift + P</strong> → type <strong>Python: Select Interpreter</strong> → choose the one inside <code>./venv</code>.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h3>🚀 Run the project!</h3>
+          <div class="code-block">
+            <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+            <pre><span class="cmd">python air_canvas.py</span></pre>
+          </div>
+          <p style="margin-top:10px">A window called <strong>✨ AI Air Canvas</strong> will open with your live webcam feed and the pink colour bar at the top.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Troubleshooting -->
+  <div class="card">
+    <div class="card-title"><div class="icon">🐛</div>Troubleshooting</div>
+    <div class="trouble-item">
+      <div class="trouble-problem">❌ Cannot open webcam</div>
+      <div class="trouble-fix">Try changing <code>cv2.VideoCapture(0)</code> to <code>(1)</code> or <code>(2)</code> in <code>air_canvas.py</code></div>
+    </div>
+    <div class="trouble-item">
+      <div class="trouble-problem">❌ ModuleNotFoundError</div>
+      <div class="trouble-fix">Make sure you activated the venv first: <code>venv\Scripts\activate</code> (Windows) or <code>source venv/bin/activate</code> (Mac/Linux)</div>
+    </div>
+    <div class="trouble-item">
+      <div class="trouble-problem">❌ MediaPipe install fails</div>
+      <div class="trouble-fix">Use Python 3.8–3.11. Check version: <code>python --version</code></div>
+    </div>
+    <div class="trouble-item">
+      <div class="trouble-problem">⚠️ Laggy / slow drawing</div>
+      <div class="trouble-fix">Lower resolution: change <code>1280</code> to <code>640</code> and <code>720</code> to <code>480</code> in <code>air_canvas.py</code></div>
+    </div>
+    <div class="trouble-item">
+      <div class="trouble-problem">⚠️ Hand not detected</div>
+      <div class="trouble-fix">Improve lighting — face a bright light source. Keep hand fully visible in frame.</div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Built with <span>❤️</span> using Python · OpenCV · MediaPipe · NumPy
+</footer>
+
+<script>
+function copyCode(btn) {
+  const block = btn.closest('.code-block');
+  const text = block.querySelector('pre').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Copied';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+</script>
+</body>
+</html>
